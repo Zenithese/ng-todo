@@ -20,3 +20,8 @@ export class TodoItem {
         this.done = done;
     }
 }
+
+export interface Todo {
+    action: string;
+    done: boolean;
+}

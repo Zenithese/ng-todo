@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Model, TodoItem } from './model';
+import { Model, TodoItem, Todo } from './model';
 // import { TodoComponent } from './todo/todo.component';
 import { DataService } from './data.service'
 
@@ -25,14 +25,19 @@ export class AppComponent implements OnInit {
     return this.todos.filter(todo => !todo.done);
   }
 
-  addItem(newItem) {
+  addItem(newItem: string) {
     if (newItem != "") {
       // this.model.items.push(new TodoItem(newItem, false));
-      this.todos.push({"action": newItem, "done": false});
+      // this.todos.push({"action": newItem, "done": false});
+      console.log("addTodo")
+      const newTodo: Todo = { action: newItem, done: false } as Todo
+      this.dataService
+        .createTodo(newTodo)
+        .subscribe(todo => this.todos.push(todo));
     }
   }
 
   ngOnInit() {
-    this.dataService.fetch().subscribe((todos) => this.todos = todos)
+    this.dataService.fetchTodos().subscribe((todos) => this.todos = todos)
   }
 }
